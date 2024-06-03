@@ -49,14 +49,8 @@ const CustomNavbar = ({ onSearch }) => {
             style={{ maxHeight: "100px" }}
             navbarScroll
           >
-            <Nav.Link onClick={() => handleNavigation("/home-page")}>
+            <Nav.Link onClick={() => handleNavigation("/home-page-user")}>
               Home
-            </Nav.Link>
-            <Nav.Link onClick={() => handleNavigation("/user-posts")}>
-              I miei annunci
-            </Nav.Link>
-            <Nav.Link onClick={() => handleNavigation("/users")}>
-              Utenti in cerca di lavoro
             </Nav.Link>
           </Nav>
           <Form className="d-flex">
@@ -81,9 +75,9 @@ const CustomNavbar = ({ onSearch }) => {
                 />
               }
               id="user-dropdown"
-              align="end"
+              alignRight
             >
-              <NavDropdown.Item as={Link} to="/profile">
+              <NavDropdown.Item as={Link} to="/profilo-utente">
                 Il mio profilo
               </NavDropdown.Item>
               <NavDropdown.Divider />

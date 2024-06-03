@@ -1,7 +1,7 @@
 import { Router } from "express";
 import User from "../models/users.models.js";
 import { v2 as cloudinary } from "cloudinary";
-import { avatarmulter } from "../Middleware/multer.js";
+import avatarmulter from "../Middleware/multer.js";
 import bcrypt from "bcryptjs";
 import { authMiddleware } from "../auth/index.js";
 import passport from "passport";
@@ -94,6 +94,7 @@ userRoute.get("/", async (req, res, next) => {
 // funzionante altro codice
 userRoute.patch(
   "/:id/avatar",
+  authMiddleware,
   avatarmulter.single("avatar"),
   async (req, res, next) => {
     try {

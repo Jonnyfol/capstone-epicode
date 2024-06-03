@@ -4,6 +4,7 @@ import CustomNavbar from "../navbar/navbar";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import "./homePage.css";
 
 const HomePage = () => {
   const [announcements, setAnnouncements] = useState([]);
@@ -199,12 +200,15 @@ const HomePage = () => {
             <h2>Companies</h2>
             {companies.length > 0 ? (
               companies.map((company) => (
-                <Card className="mb-3" key={company._id}>
+                <Card
+                  className="mb-3 d-flex justify-content-center "
+                  key={company._id}
+                >
                   <Row noGutters>
                     <Col md={4}>
                       <Card.Img
                         src={company.avatar}
-                        className="card-img"
+                        className="card-img measurements "
                         alt={company.company}
                       />
                     </Col>
@@ -213,12 +217,6 @@ const HomePage = () => {
                         <Card.Title>{company.company}</Card.Title>
                         <Card.Text>Email: {company.email}</Card.Text>
                         <Card.Text>Position: {company.position}</Card.Text>
-                        <Card.Text>
-                          Open positions:{" "}
-                          {company.positions
-                            ? company.positions
-                            : "No positions available"}
-                        </Card.Text>
                       </Card.Body>
                     </Col>
                   </Row>

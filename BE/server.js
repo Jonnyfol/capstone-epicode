@@ -7,6 +7,7 @@ import nodemailer from "nodemailer";
 import { userRoute } from "./Services/routes/user.route.js";
 import { loginRoute } from "./Services/routes/login.route.js";
 import { postRoute } from "./Services/routes/post.route.js";
+import emailRoute from "./Services/routes/email.route.js";
 
 config();
 const PORT = process.env.PORT || 3006;
@@ -19,6 +20,7 @@ app.use("/", loginRoute);
 app.use("/company", companyRoute);
 app.use("/user", userRoute);
 app.use("/post", postRoute);
+app.use("/api", emailRoute);
 
 const initServer = async () => {
   try {

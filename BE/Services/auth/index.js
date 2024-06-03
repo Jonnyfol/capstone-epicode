@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import User from "../models/users.models.js";
+import Company from "../models/company.models.js";
 
 export const generateJWT = (payload) => {
   return new Promise((resolve, reject) => {

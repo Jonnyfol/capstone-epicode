@@ -3,7 +3,7 @@ import Company from "../models/company.models.js";
 // import { v2 as cloudinary } from "cloudinary";
 // import bcrypt from "bcryptjs";
 import { authMiddleware } from "../auth/index.js";
-import { avatarmulter } from "../Middleware/multer.js";
+import avatarmulter from "../Middleware/multer.js";
 
 // import passport from "passport";
 
@@ -81,12 +81,12 @@ companyRoute.patch(
   async (req, res, next) => {
     try {
       // Il percorso dell'immagine caricata sarà disponibile in req.file.path
-      const result = await cloudinary.uploader.upload(req.file.path);
+      // const result = await cloudinary.uploader.upload(req.file.path);
 
       // Salvataggio dell'URL dell'immagine nel database
       const company = await Company.findByIdAndUpdate(
         req.params.id,
-        { avatar: result.secure_url },
+        { avatar: req.file.path },
         {
           new: true, // L'oggetto restituito deve essere quello aggiornato
         }

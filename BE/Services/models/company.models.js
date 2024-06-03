@@ -18,6 +18,12 @@ const companySchema = new Schema(
       type: String,
       required: true,
     },
+    positions: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Post",
+      },
+    ],
     password: {
       type: String,
       required: true,

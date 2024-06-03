@@ -1,6 +1,6 @@
 import { Router } from "express";
 import Post from "../models/post.models.js";
-import { avatarmulter } from "../Middleware/multer.js";
+import avatarmulter from "../Middleware/multer.js";
 import bcrypt from "bcryptjs";
 import { authMiddleware } from "../auth/index.js";
 
@@ -219,5 +219,16 @@ postRoute.post("/", authMiddleware, async (req, res, next) => {
     res.send(post);
   } catch (error) {
     next(error);
+  }
+});
+
+// Richiesta GET per ottenere tutti gli annunci di un determinato autore
+postRoute.get("/user-posts", authMiddleware, async (req, res, next) => {
+  try {
+    const username = req.user.username; // Assicurati che l'authMiddleware aggiunga il campo username a req.user
+    let posts = await Post.find({ "company.name": username });
+    res.status(200).send(posts);
+  } catch (err) {
+    next(err);
   }
 });

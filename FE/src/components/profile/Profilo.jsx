@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Container, Card, Button, Form, Alert } from "react-bootstrap";
 
-const Profile = () => {
+const Profile = ({ setAvatarUrl }) => {
   const [profile, setProfile] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -28,6 +28,7 @@ const Profile = () => {
 
         const data = await response.json();
         setProfile(data);
+        setAvatarUrl(data.avatar);
       } catch (error) {
         setError(error.message);
       } finally {
@@ -68,6 +69,7 @@ const Profile = () => {
 
       const data = await response.json();
       setProfile(data);
+      setAvatarUrl(data.avatar);
       setSuccess("Logo aggiornato con successo!");
       setError(null);
     } catch (error) {

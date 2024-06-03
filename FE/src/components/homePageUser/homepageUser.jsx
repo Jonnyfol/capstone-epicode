@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import CustomNavbar from "../navbar/navbar";
+import CustomNavbarUser from "../navbar/navbarUser";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { FaEdit, FaTrash } from "react-icons/fa";
+import "./homePageUser.css";
 
 const HomePageUser = () => {
   const [announcements, setAnnouncements] = useState([]);
@@ -10,7 +12,9 @@ const HomePageUser = () => {
   const [companies, setCompanies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [avatarUrl, setAvatarUrl] = useState(localStorage.getItem("avatar"));
   const navigate = useNavigate();
+  const username = localStorage.getItem("username");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -62,7 +66,43 @@ const HomePageUser = () => {
   };
 
   const handleDetails = (id) => {
-    navigate(`/details/${id}`);
+    navigate(`/details-page-user/${id}`);
+  };
+
+  const handleEdit = (id) => {
+    navigate(`/edit/${id}`);
+  };
+
+  const handleDelete = async (id) => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await fetch(`http://localhost:3006/post/${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (response.ok) {
+        setAnnouncements(announcements.filter((a) => a._id !== id));
+        setFilteredAnnouncements(
+          filteredAnnouncements.filter((a) => a._id !== id)
+        );
+        // Update company positions count
+        const updatedCompanies = companies.map((company) => {
+          if (company.positions.includes(id)) {
+            company.positions = company.positions.filter(
+              (positionId) => positionId !== id
+            );
+          }
+          return company;
+        });
+        setCompanies(updatedCompanies);
+      } else {
+        throw new Error("Errore durante l'eliminazione del post");
+      }
+    } catch (error) {
+      setError(error.message);
+    }
   };
 
   if (loading) {
@@ -75,7 +115,7 @@ const HomePageUser = () => {
 
   return (
     <>
-      <CustomNavbar onSearch={handleSearch} />
+      <CustomNavbarUser onSearch={handleSearch} avatarUrl={avatarUrl} />
       <Container fluid className="mt-4">
         <Row>
           <Col lg={8} md={7} sm={12}>
@@ -115,6 +155,24 @@ const HomePageUser = () => {
                         >
                           Dettagli
                         </Button>
+                        {announcement.company.name === username && (
+                          <>
+                            <Button
+                              variant="outline-secondary"
+                              className="ml-2"
+                              onClick={() => handleEdit(announcement._id)}
+                            >
+                              <FaEdit />
+                            </Button>
+                            <Button
+                              variant="outline-danger"
+                              className="ml-2"
+                              onClick={() => handleDelete(announcement._id)}
+                            >
+                              <FaTrash />
+                            </Button>
+                          </>
+                        )}
                       </Card.Body>
                     </Col>
                   </Row>
@@ -128,12 +186,15 @@ const HomePageUser = () => {
             <h2>Companies</h2>
             {companies.length > 0 ? (
               companies.map((company) => (
-                <Card className="mb-3" key={company._id}>
+                <Card
+                  className="mb-3 d-flex justify-content-center"
+                  key={company._id}
+                >
                   <Row noGutters>
                     <Col md={4}>
                       <Card.Img
                         src={company.avatar}
-                        className="card-img"
+                        className="card-img measurements"
                         alt={company.company}
                       />
                     </Col>
@@ -142,12 +203,6 @@ const HomePageUser = () => {
                         <Card.Title>{company.company}</Card.Title>
                         <Card.Text>Email: {company.email}</Card.Text>
                         <Card.Text>Position: {company.position}</Card.Text>
-                        <Card.Text>
-                          Open positions:{" "}
-                          {company.positions
-                            ? company.positions.join(", ")
-                            : "No positions available"}
-                        </Card.Text>
                       </Card.Body>
                     </Col>
                   </Row>

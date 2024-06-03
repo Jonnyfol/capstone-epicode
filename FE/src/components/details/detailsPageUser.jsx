@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { Container, Card, Button, Form, Alert } from "react-bootstrap";
-import CustomNavbar from "../navbar/navbar";
+import CustomNavbar from "../navbar/navbarUser";
 
-const DetailsPage = () => {
+const DetailsPageUser = () => {
   const { id } = useParams();
   const [post, setPost] = useState({});
   const [loading, setLoading] = useState(true);
@@ -135,4 +135,4 @@ const DetailsPage = () => {
   );
 };
 
-export default DetailsPage;
+export default DetailsPageUser;
