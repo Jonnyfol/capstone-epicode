@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Container, Card, Button, Form, Alert } from "react-bootstrap";
+import { Container, Card, Button, Form, Alert, Spinner } from "react-bootstrap";
 
 const Profile = ({ setAvatarUrl }) => {
   const [profile, setProfile] = useState({});
   const [loading, setLoading] = useState(true);
+  const [loadingAvatar, setLoadingAvatar] = useState(false);
   const [error, setError] = useState(null);
   const [avatar, setAvatar] = useState(null);
   const [success, setSuccess] = useState(null);
@@ -37,7 +38,7 @@ const Profile = ({ setAvatarUrl }) => {
     };
 
     fetchProfile();
-  }, []);
+  }, [setAvatarUrl]);
 
   const handleAvatarChange = (e) => {
     setAvatar(e.target.files[0]);
@@ -45,6 +46,7 @@ const Profile = ({ setAvatarUrl }) => {
 
   const handleAvatarUpload = async (e) => {
     e.preventDefault();
+    setLoadingAvatar(true);
     const userId = localStorage.getItem("_id");
     const token = localStorage.getItem("token");
 
@@ -70,11 +72,17 @@ const Profile = ({ setAvatarUrl }) => {
       const data = await response.json();
       setProfile(data);
       setAvatarUrl(data.avatar);
+
+      // Aggiorna l'avatar nella local storage
+      localStorage.setItem("avatar", data.avatar);
+
       setSuccess("Logo aggiornato con successo!");
       setError(null);
     } catch (error) {
       setError(error.message);
       setSuccess(null);
+    } finally {
+      setLoadingAvatar(false);
     }
   };
 
@@ -110,8 +118,21 @@ const Profile = ({ setAvatarUrl }) => {
               <Form.Label>Carica nuovo avatar</Form.Label>
               <Form.Control type="file" onChange={handleAvatarChange} />
             </Form.Group>
-            <Button variant="primary" type="submit">
-              Aggiorna il logo
+            <Button variant="primary" type="submit" disabled={loadingAvatar}>
+              {loadingAvatar ? (
+                <>
+                  <Spinner
+                    as="span"
+                    animation="border"
+                    size="sm"
+                    role="status"
+                    aria-hidden="true"
+                  />{" "}
+                  Caricamento...
+                </>
+              ) : (
+                "Aggiorna il logo"
+              )}
             </Button>
           </Form>
           {success && (

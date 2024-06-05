@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Container, Card, Button, Form, Alert, Image } from "react-bootstrap";
+import {
+  Container,
+  Card,
+  Button,
+  Form,
+  Alert,
+  Image,
+  Spinner,
+} from "react-bootstrap";
 
 const ProfiloUtente = () => {
   const [profile, setProfile] = useState({
@@ -14,6 +22,7 @@ const ProfiloUtente = () => {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
   const [avatar, setAvatar] = useState(null);
+  const [uploading, setUploading] = useState(false); // Nuovo stato per il caricamento
 
   useEffect(() => {
     const fetchProfile = async () => {
@@ -56,6 +65,7 @@ const ProfiloUtente = () => {
 
   const handleAvatarUpload = async (e) => {
     e.preventDefault();
+    setUploading(true); // Inizia il caricamento
     const userId = localStorage.getItem("_id");
     const token = localStorage.getItem("token");
 
@@ -80,11 +90,18 @@ const ProfiloUtente = () => {
 
       const data = await response.json();
       setProfile(data);
+      setAvatar(data.avatar);
+
+      // Aggiorna l'avatar nella local storage
+      localStorage.setItem("avatar", data.avatar);
+
       setSuccess("Logo aggiornato con successo!");
       setError(null);
     } catch (error) {
       setError(error.message);
       setSuccess(null);
+    } finally {
+      setUploading(false); // Fine del caricamento
     }
   };
 
@@ -199,8 +216,12 @@ const ProfiloUtente = () => {
               <Form.Label>Carica nuovo avatar</Form.Label>
               <Form.Control type="file" onChange={handleAvatarChange} />
             </Form.Group>
-            <Button variant="primary" type="submit">
-              Aggiorna Avatar
+            <Button variant="primary" type="submit" disabled={uploading}>
+              {uploading ? (
+                <Spinner animation="border" size="sm" />
+              ) : (
+                "Aggiorna Avatar"
+              )}
             </Button>
           </Form>
 

@@ -7,7 +7,7 @@ dotenv.config();
 const emailRoute = express.Router();
 
 emailRoute.post("/send-email", async (req, res) => {
-  const { to, name, email, message } = req.body;
+  const { name, email, message } = req.body;
 
   const transporter = nodemailer.createTransport({
     host: "smtp.ethereal.email",
@@ -29,12 +29,12 @@ emailRoute.post("/send-email", async (req, res) => {
   try {
     const mail = await transporter.sendMail({
       from: `"Epicode Tester" <${process.env.SMTP_MAIL_USERNAME}>`,
-      to: to,
+      to: email,
       subject: "Nuova candidatura ricevuta",
       html: mailBody,
     });
 
-    console.log("Mail sent:", mail.messageId);
+    console.log("Mail inviata:", mail.messageId);
     res.status(200).send("Email inviata con successo");
   } catch (err) {
     console.error("Error sending email:", err);

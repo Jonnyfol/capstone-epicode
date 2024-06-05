@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Container, Form, Button, Alert } from "react-bootstrap";
 
 const UserForm = () => {
   const [formData, setFormData] = useState({
@@ -12,6 +13,8 @@ const UserForm = () => {
   });
 
   const [errors, setErrors] = useState({});
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const handleChange = (e) => {
     setFormData({
@@ -50,87 +53,114 @@ const UserForm = () => {
         }
 
         const data = await response.json();
+        setSuccessMessage("Utente registrato con successo!");
+        setErrorMessage("");
         console.log("User added:", data);
       } catch (error) {
+        setErrorMessage("Errore durante la registrazione dell'utente.");
+        setSuccessMessage("");
         console.error("Error adding user:", error);
       }
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label>Nome</label>
-        <input
-          type="text"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-          required
-        />
-        {errors.name && <span>{errors.name}</span>}
-      </div>
-      <div>
-        <label>Cognome</label>
-        <input
-          type="text"
-          name="lastName"
-          value={formData.lastName}
-          onChange={handleChange}
-          required
-        />
-        {errors.lastName && <span>{errors.lastName}</span>}
-      </div>
-      <div>
-        <label>Email</label>
-        <input
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-        />
-        {errors.email && <span>{errors.email}</span>}
-      </div>
-      <div>
-        <label>Data di nascita</label>
-        <input
-          type="date"
-          name="bornDate"
-          value={formData.bornDate}
-          onChange={handleChange}
-        />
-      </div>
-      <div>
-        <label>Avatar</label>
-        <input
-          type="text"
-          name="avatar"
-          value={formData.avatar}
-          onChange={handleChange}
-        />
-      </div>
-      <div>
-        <label>Nome utente</label>
-        <input
-          type="text"
-          name="username"
-          value={formData.username}
-          onChange={handleChange}
-        />
-      </div>
-      <div>
-        <label>Password</label>
-        <input
-          type="password"
-          name="password"
-          value={formData.password}
-          onChange={handleChange}
-        />
-        {errors.password && <span>{errors.password}</span>}
-      </div>
-      <button type="submit">Registrati</button>
-    </form>
+    <Container>
+      <h2>Registrazione Utente</h2>
+      {successMessage && <Alert variant="success">{successMessage}</Alert>}
+      {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
+      <Form onSubmit={handleSubmit}>
+        <Form.Group controlId="formName">
+          <Form.Label>Nome</Form.Label>
+          <Form.Control
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            isInvalid={!!errors.name}
+          />
+          <Form.Control.Feedback type="invalid">
+            {errors.name}
+          </Form.Control.Feedback>
+        </Form.Group>
+
+        <Form.Group controlId="formLastName">
+          <Form.Label>Cognome</Form.Label>
+          <Form.Control
+            type="text"
+            name="lastName"
+            value={formData.lastName}
+            onChange={handleChange}
+            isInvalid={!!errors.lastName}
+          />
+          <Form.Control.Feedback type="invalid">
+            {errors.lastName}
+          </Form.Control.Feedback>
+        </Form.Group>
+
+        <Form.Group controlId="formEmail">
+          <Form.Label>Email</Form.Label>
+          <Form.Control
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            isInvalid={!!errors.email}
+          />
+          <Form.Control.Feedback type="invalid">
+            {errors.email}
+          </Form.Control.Feedback>
+        </Form.Group>
+
+        <Form.Group controlId="formBornDate">
+          <Form.Label>Data di nascita</Form.Label>
+          <Form.Control
+            type="date"
+            name="bornDate"
+            value={formData.bornDate}
+            onChange={handleChange}
+          />
+        </Form.Group>
+
+        <Form.Group controlId="formAvatar">
+          <Form.Label>Avatar</Form.Label>
+          <Form.Control
+            type="text"
+            name="avatar"
+            value={formData.avatar}
+            onChange={handleChange}
+          />
+        </Form.Group>
+
+        <Form.Group controlId="formUsername">
+          <Form.Label>Nome utente</Form.Label>
+          <Form.Control
+            type="text"
+            name="username"
+            value={formData.username}
+            onChange={handleChange}
+          />
+        </Form.Group>
+
+        <Form.Group controlId="formPassword">
+          <Form.Label>Password</Form.Label>
+          <Form.Control
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            isInvalid={!!errors.password}
+          />
+          <Form.Control.Feedback type="invalid">
+            {errors.password}
+          </Form.Control.Feedback>
+        </Form.Group>
+
+        <Button variant="primary" type="submit">
+          Registrati
+        </Button>
+      </Form>
+    </Container>
   );
 };
 

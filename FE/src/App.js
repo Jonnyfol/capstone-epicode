@@ -20,6 +20,11 @@ import UserList from "./components/userlist/userList";
 import UserPosts from "./components/userposts/userPosts";
 import DetailsPageUser from "./components/details/detailsPageUser";
 
+const ProtectedRoute = ({ children }) => {
+  const token = localStorage.getItem("token");
+  return token ? children : <Navigate to="/welcome" />;
+};
+
 function App() {
   const [avatarUrl, setAvatarUrl] = useState(localStorage.getItem("avatar"));
 
@@ -27,35 +32,94 @@ function App() {
     <Router>
       <Routes>
         <Route path="/welcome" element={<WelcomeArea />} />
-        <Route path="/home-page" element={<HomePage />} />
-        <Route path="/users" element={<UserList />} />
-        <Route path="/user-posts" element={<UserPosts />} />
-        <Route path="/details-page-user/:id" element={<DetailsPageUser />} />
-
         <Route path="/login-user" element={<LoginUser userType="user" />} />
         <Route
           path="/login-company"
           element={<LoginUser userType="company" />}
         />
-        <Route path="/details/:id" element={<DetailsPage />} />
+        <Route path="/new-company" element={<CompanyForm />} />
+        <Route path="/new-user" element={<UserForm />} />
+
+        <Route
+          path="/home-page"
+          element={
+            <ProtectedRoute>
+              <HomePage />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/home-page-user"
           element={
-            <HomePageUser avatarUrl={avatarUrl} setAvatarUrl={setAvatarUrl} />
+            <ProtectedRoute>
+              <HomePageUser avatarUrl={avatarUrl} setAvatarUrl={setAvatarUrl} />
+            </ProtectedRoute>
           }
         />
-        <Route path="/edit/:id" element={<EditPost />} />
+        <Route
+          path="/users"
+          element={
+            <ProtectedRoute>
+              <UserList />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/user-posts"
+          element={
+            <ProtectedRoute>
+              <UserPosts />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/details-page-user/:id"
+          element={
+            <ProtectedRoute>
+              <DetailsPageUser />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/details/:id"
+          element={
+            <ProtectedRoute>
+              <DetailsPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/edit/:id"
+          element={
+            <ProtectedRoute>
+              <EditPost />
+            </ProtectedRoute>
+          }
+        />
         <Route path="/" element={<Navigate to="/welcome" />} />
-        <Route path="/new-company" element={<CompanyForm />} />
-        <Route path="/new-user" element={<UserForm />} />
-        <Route path="/post-form" element={<PostForm />} />
+        <Route
+          path="/post-form"
+          element={
+            <ProtectedRoute>
+              <PostForm />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/profile"
-          element={<Profile setAvatarUrl={setAvatarUrl} />}
+          element={
+            <ProtectedRoute>
+              <Profile setAvatarUrl={setAvatarUrl} />
+            </ProtectedRoute>
+          }
         />
         <Route
           path="/profilo-utente"
-          element={<ProfiloUtente setAvatarUrl={setAvatarUrl} />}
+          element={
+            <ProtectedRoute>
+              <ProfiloUtente setAvatarUrl={setAvatarUrl} />
+            </ProtectedRoute>
+          }
         />
       </Routes>
     </Router>

@@ -14,6 +14,10 @@ export default function AuthContextProvider({ children }) {
 
   useEffect(() => {
     localStorage.setItem("token", token);
+    //chiamata api /me
+    //set author con il valore /me
+    //set username con il valore /me
+    //set avatar con il valore /me
   }, [token]);
 
   useEffect(() => {
