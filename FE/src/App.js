@@ -44,7 +44,7 @@ function App() {
           path="/home-page"
           element={
             <ProtectedRoute>
-              <HomePage />
+              <HomePage avatarUrl={avatarUrl} setAvatarUrl={setAvatarUrl} />
             </ProtectedRoute>
           }
         />

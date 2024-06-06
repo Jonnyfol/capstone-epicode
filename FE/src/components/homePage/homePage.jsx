@@ -133,7 +133,7 @@ const HomePage = () => {
             >
               Crea il tuo annuncio!
             </Button>
-            <h2>Announcements</h2>
+            <h2>Annunci</h2>
             {filteredAnnouncements.length > 0 ? (
               filteredAnnouncements.map((announcement) => (
                 <Card className="mb-3" key={announcement._id}>
@@ -173,14 +173,14 @@ const HomePage = () => {
                           <>
                             <Button
                               variant="outline-secondary"
-                              className="ml-2"
+                              className="ml-2 mx-3"
                               onClick={() => handleEdit(announcement._id)}
                             >
                               <FaEdit />
                             </Button>
                             <Button
                               variant="outline-danger"
-                              className="ml-2"
+                              className="ml-2 mx-3"
                               onClick={() => handleDelete(announcement._id)}
                             >
                               <FaTrash />
@@ -197,7 +197,7 @@ const HomePage = () => {
             )}
           </Col>
           <Col lg={4} md={5} sm={12}>
-            <h2>Companies</h2>
+            <h2>Aziende</h2>
             {companies.length > 0 ? (
               companies.map((company) => (
                 <Card

@@ -134,14 +134,14 @@ const UserPosts = () => {
                       <>
                         <Button
                           variant="outline-secondary"
-                          className="ml-2"
+                          className="ml-2 mx-2"
                           onClick={() => handleEdit(announcement._id)}
                         >
                           <FaEdit />
                         </Button>
                         <Button
                           variant="outline-danger"
-                          className="ml-2"
+                          className="ml-2 mx-2"
                           onClick={() => handleDelete(announcement._id)}
                         >
                           <FaTrash />

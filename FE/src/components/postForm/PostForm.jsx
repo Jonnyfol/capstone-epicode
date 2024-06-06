@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { Container, Form, Button, Alert } from "react-bootstrap";
+import { Container, Form, Button, Alert, Image } from "react-bootstrap";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css"; // Importa i file di stile di React Quill
 
 const PostForm = () => {
   const [formData, setFormData] = useState({
@@ -11,7 +13,7 @@ const PostForm = () => {
     company: {
       name: "",
       logo: "",
-      username: "", // Aggiungi il campo username
+      username: "",
     },
     content: "",
   });
@@ -29,7 +31,7 @@ const PostForm = () => {
         company: {
           name: companyName,
           logo: logo,
-          username: companyName, // Imposta anche il campo username
+          username: companyName,
         },
       }));
     }
@@ -128,7 +130,7 @@ const PostForm = () => {
       company: {
         name: localStorage.getItem("username") || "",
         logo: localStorage.getItem("avatar") || "",
-        username: localStorage.getItem("username") || "", // Resetta anche il campo username
+        username: localStorage.getItem("username") || "",
       },
       content: "",
     });
@@ -207,7 +209,7 @@ const PostForm = () => {
 
         <Form.Group controlId="formLogo">
           <Form.Label>Logo</Form.Label>
-          <img src={formData.company.logo} alt="Company Logo" width="100" />
+          <Image src={formData.company.logo} alt="Company Logo" width="100" />
         </Form.Group>
 
         <Form.Group controlId="formContent">
@@ -221,8 +223,15 @@ const PostForm = () => {
           />
         </Form.Group>
 
-        <Button variant="primary" type="submit">
+        <Button variant="primary" type="submit" className="mt-3">
           Invia
+        </Button>
+        <Button
+          variant="outline-danger"
+          className="mt-3 mx-3"
+          href="/home-page"
+        >
+          Back
         </Button>
       </Form>
     </Container>

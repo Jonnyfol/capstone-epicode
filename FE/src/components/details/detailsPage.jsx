@@ -176,7 +176,7 @@ const DetailsPage = () => {
             Invia
           </Button>
           <Button
-            variant="primary"
+            variant="outline-danger"
             className="mt-3 mx-3"
             onClick={() => navigate("/home-page")}
           >

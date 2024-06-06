@@ -119,7 +119,7 @@ const HomePageUser = () => {
       <Container fluid className="mt-4">
         <Row>
           <Col lg={8} md={7} sm={12}>
-            <h2>Announcements</h2>
+            <h2>Annunci</h2>
             {filteredAnnouncements.length > 0 ? (
               filteredAnnouncements.map((announcement) => (
                 <Card className="mb-3" key={announcement._id}>
@@ -183,7 +183,7 @@ const HomePageUser = () => {
             )}
           </Col>
           <Col lg={4} md={5} sm={12}>
-            <h2>Companies</h2>
+            <h2>Aziende</h2>
             {companies.length > 0 ? (
               companies.map((company) => (
                 <Card

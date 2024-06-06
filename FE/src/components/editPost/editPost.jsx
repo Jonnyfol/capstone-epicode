@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Container, Form, Button, Alert } from "react-bootstrap";
 import { useParams, useNavigate } from "react-router-dom";
+import CustomNavbar from "../navbar/navbar";
 
 const EditPost = () => {
   const { id } = useParams();
@@ -101,82 +102,92 @@ const EditPost = () => {
   }
 
   return (
-    <Container className="mt-4">
-      <h2>Modifica Post</h2>
-      {successMessage && <Alert variant="success">{successMessage}</Alert>}
-      {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
-      <Form onSubmit={handleSubmit}>
-        <Form.Group controlId="formCategory">
-          <Form.Label>Categoria</Form.Label>
-          <Form.Control
-            type="text"
-            name="category"
-            value={formData.category}
-            onChange={handleChange}
-            required
-          />
-        </Form.Group>
+    <div>
+      <CustomNavbar />
+      <Container className="mt-4">
+        <h2>Modifica Post</h2>
+        {successMessage && <Alert variant="success">{successMessage}</Alert>}
+        {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
+        <Form onSubmit={handleSubmit}>
+          <Form.Group controlId="formCategory">
+            <Form.Label>Categoria</Form.Label>
+            <Form.Control
+              type="text"
+              name="category"
+              value={formData.category}
+              onChange={handleChange}
+              required
+            />
+          </Form.Group>
 
-        <Form.Group controlId="formTitle">
-          <Form.Label>Titolo</Form.Label>
-          <Form.Control
-            type="text"
-            name="title"
-            value={formData.title}
-            onChange={handleChange}
-            required
-          />
-        </Form.Group>
+          <Form.Group controlId="formTitle">
+            <Form.Label>Titolo</Form.Label>
+            <Form.Control
+              type="text"
+              name="title"
+              value={formData.title}
+              onChange={handleChange}
+              required
+            />
+          </Form.Group>
 
-        <Form.Group controlId="formCover">
-          <Form.Label>Immagine di copertura</Form.Label>
-          <Form.Control
-            type="text"
-            name="cover"
-            value={formData.cover}
-            onChange={handleChange}
-            required
-          />
-        </Form.Group>
+          <Form.Group controlId="formCover">
+            <Form.Label>Immagine di copertura</Form.Label>
+            <Form.Control
+              type="text"
+              name="cover"
+              value={formData.cover}
+              onChange={handleChange}
+              required
+            />
+          </Form.Group>
 
-        <Form.Group controlId="formReadTimeValue">
-          <Form.Label>Tempo di lettura (Valore)</Form.Label>
-          <Form.Control
-            type="number"
-            name="readTimeValue"
-            value={formData.readTimeValue}
-            onChange={handleChange}
-            required
-          />
-        </Form.Group>
+          <Form.Group controlId="formReadTimeValue">
+            <Form.Label>Tempo di lettura (Valore)</Form.Label>
+            <Form.Control
+              type="number"
+              name="readTimeValue"
+              value={formData.readTimeValue}
+              onChange={handleChange}
+              required
+            />
+          </Form.Group>
 
-        <Form.Group controlId="formReadTimeUnit">
-          <Form.Label>Tempo di lettura (Unità)</Form.Label>
-          <Form.Control
-            type="text"
-            name="readTimeUnit"
-            value={formData.readTimeUnit}
-            onChange={handleChange}
-            required
-          />
-        </Form.Group>
+          <Form.Group controlId="formReadTimeUnit">
+            <Form.Label>Tempo di lettura (Unità)</Form.Label>
+            <Form.Control
+              type="text"
+              name="readTimeUnit"
+              value={formData.readTimeUnit}
+              onChange={handleChange}
+              required
+            />
+          </Form.Group>
 
-        <Form.Group controlId="formContent">
-          <Form.Label>Contenuto</Form.Label>
-          <Form.Control
-            as="textarea"
-            name="content"
-            value={formData.content}
-            onChange={handleChange}
-            required
-          />
-        </Form.Group>
+          <Form.Group controlId="formContent">
+            <Form.Label>Contenuto</Form.Label>
+            <Form.Control
+              as="textarea"
+              name="content"
+              value={formData.content}
+              onChange={handleChange}
+              required
+            />
+          </Form.Group>
 
-        <Button variant="primary" type="submit">
-          Aggiorna Post
-        </Button>
-      </Form>
-    </Container>
+          <Button variant="primary" type="submit" className="mt-3">
+            Aggiorna Post
+          </Button>
+          <Button
+            variant="outline-danger"
+            className="mt-3 mx-3"
+            href="/home-page"
+          >
+            Back
+          </Button>
+        </Form>
+      </Container>
+    </div>
   );
 };
 

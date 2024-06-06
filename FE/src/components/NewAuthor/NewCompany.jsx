@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { Button } from "react-bootstrap";
 
 const CompanyForm = () => {
   const [formData, setFormData] = useState({
@@ -119,9 +120,16 @@ const CompanyForm = () => {
             La password deve essere di almeno 6 caratteri.
           </small>
         </div>
-        <button type="submit" className="btn btn-primary">
+        <button type="submit" className="btn btn-primary mt-3">
           Submit
         </button>
+        <Button
+          variant="outline-danger"
+          className="mt-3 mx-3"
+          href="/login-company"
+        >
+          Back
+        </Button>
       </form>
       {successMessage && (
         <div className="alert alert-success mt-3">

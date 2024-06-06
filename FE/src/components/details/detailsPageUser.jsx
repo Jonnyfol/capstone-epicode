@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { Container, Card, Button, Form, Alert } from "react-bootstrap";
+import { useParams, useNavigate } from "react-router-dom";
+import {
+  Container,
+  Card,
+  Button,
+  Form,
+  Alert,
+  Row,
+  Col,
+} from "react-bootstrap";
 import CustomNavbar from "../navbar/navbarUser";
 
 const DetailsPageUser = () => {
@@ -14,6 +22,7 @@ const DetailsPageUser = () => {
     email: "",
     message: "",
   });
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -80,15 +89,52 @@ const DetailsPageUser = () => {
     return <Container className="mt-4">Error: {error}</Container>;
   }
 
+  if (!post) {
+    return <Container className="mt-4">Post not found</Container>;
+  }
+
   return (
     <div>
       <CustomNavbar />
       <Container className="mt-4">
         <Card>
+          <Card.Img
+            variant="top"
+            src={post.cover}
+            alt={post.title}
+            style={{ maxWidth: "100%", maxHeight: "400px", objectFit: "cover" }}
+          />
           <Card.Body>
-            <Card.Title>{post.title}</Card.Title>
-            <Card.Text>{post.content}</Card.Text>
-            <Card.Img src={post.cover} alt={post.title} />
+            <Row>
+              <Col md={2}>
+                <img
+                  src={post.company.logo}
+                  alt={post.company.name}
+                  style={{
+                    maxWidth: "100%",
+                    maxHeight: "100px",
+                    objectFit: "cover",
+                  }}
+                />
+              </Col>
+              <Col md={10}>
+                <Card.Title>{post.title}</Card.Title>
+                <Card.Subtitle className="mb-2 text-muted">
+                  {post.category}
+                </Card.Subtitle>
+                <Card.Text>{post.content}</Card.Text>
+                <Card.Text>
+                  <small className="text-muted">
+                    Company: {post.company.name}
+                  </small>
+                </Card.Text>
+                <Card.Text>
+                  <small className="text-muted">
+                    Tempo di lettura: {post.readTime.value} {post.readTime.unit}
+                  </small>
+                </Card.Text>
+              </Col>
+            </Row>
           </Card.Body>
         </Card>
 
@@ -128,6 +174,13 @@ const DetailsPageUser = () => {
           </Form.Group>
           <Button variant="primary" type="submit" className="mt-3">
             Invia
+          </Button>
+          <Button
+            variant="outline-danger"
+            className="mt-3 mx-3"
+            onClick={() => navigate("/home-page-user")}
+          >
+            Back
           </Button>
         </Form>
       </Container>

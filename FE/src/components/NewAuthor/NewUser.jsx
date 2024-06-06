@@ -156,8 +156,15 @@ const UserForm = () => {
           </Form.Control.Feedback>
         </Form.Group>
 
-        <Button variant="primary" type="submit">
+        <Button variant="primary" type="submit" className="mt-3">
           Registrati
+        </Button>
+        <Button
+          variant="outline-danger"
+          className="mt-3 mx-3"
+          href="/login-user"
+        >
+          Back
         </Button>
       </Form>
     </Container>
